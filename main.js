@@ -245,8 +245,8 @@ const p = {
   frame: 0,
   angle: 0,
   projectiles: [],
-  damage: 20,
-  accuracy: 20, // 1 is absolutely accurate
+  damage: 18,
+  accuracy: 19, // 1 is absolutely accurate
   multiShot: 1,
   key: 0,
   maxHealth: 100,
@@ -521,6 +521,10 @@ function boxCollision(box1x, box1y, box1w, box1h, box2x, box2y, box2w, box2h) {
 }
 
 function renderGame() {
+  console.log("damage: " + p.damage);
+  console.log("accuracy: " + p.accuracy);
+  console.log("multiShot: " + p.multiShot);
+  console.log("maxHealth: " + p.maxHealth);
   // console.log(p.x, p.y);
   // console.log(p.maxHealth, p.health);
   // console.log(map);
@@ -612,17 +616,21 @@ function renderLevelUp() {
   // console.log("current level: " + currentLevel);
   if (currentLevel > 0) {
     // 20 10 1
-    if (p.accuracy == 20) upgrades.push("Eagle eye");
-    if (p.accuracy == 10) upgrades.push("Eagle eye master");
+    // 19 13 7 1
+    if (p.accuracy == 19) upgrades.push("Eagle eye");
+    if (p.accuracy == 13) upgrades.push("Eagle eye master");
+    if (p.accuracy == 7) upgrades.push("Eagle eye legend");
   }
-  if (currentLevel > 1) {
+  if (currentLevel > 2) {
   // 20 25 35
-    if (p.damage == 20) upgrades.push("Extra damage");
-    if (p.damage == 25) upgrades.push("Damage master");
+  // 18 20 25 35
+    if (p.damage == 18) upgrades.push("Extra damage");
+    if (p.damage == 20) upgrades.push("Damage master");
+    if (p.damage == 25) upgrades.push("Damage legend");
   }
   // 1 2 3
-  if (currentLevel > 2 && p.multiShot == 1) upgrades.push("Twin shot");
-  if (currentLevel > 4 && p.multiShot == 2) upgrades.push("Triple shot");
+  if (currentLevel > 4 && p.multiShot == 1) upgrades.push("Twin shot");
+  if (currentLevel > 7 && p.multiShot == 2) upgrades.push("Triple shot");
 
   for (i = 0; i < upgrades.length; i++) {
     let top = 80 + (i * 20);
@@ -829,10 +837,12 @@ function bindEvents() {
             p.health += 20;
             if (p.health > p.maxHealth) p.maxHealth = p.health;
           }
-          if (upgrades[i] == "Eagle eye") p.accuracy = 10;
-          if (upgrades[i] == "Eagle eye master") p.accuracy = 1;
-          if (upgrades[i] == "Extra damage") p.damage = 25;
-          if (upgrades[i] == "Damage master") p.damage = 35;
+          if (upgrades[i] == "Eagle eye") p.accuracy = 13;
+          if (upgrades[i] == "Eagle eye master") p.accuracy = 7;
+          if (upgrades[i] == "Eagle eye legend") p.accuracy = 1;
+          if (upgrades[i] == "Extra damage") p.damage = 20;
+          if (upgrades[i] == "Damage master") p.damage = 25;
+          if (upgrades[i] == "Damage legend") p.damage = 35;
           if (upgrades[i] == "Twin shot") p.multiShot = 2;
           if (upgrades[i] == "Triple shot") p.multiShot = 3;
         }
@@ -944,8 +954,8 @@ var rotateVector = function(vec, ang) {
 function init(l) {
   // Reset for first level
   if (l == 0) {
-    p.damage = 20;
-    p.accuracy = 20; // 1 is absolutely accurate
+    p.damage = 18;
+    p.accuracy = 19; // 1 is absolutely accurate
     p.multiShot = 1;
     p.maxHealth = 100;
   }
@@ -965,7 +975,7 @@ function init(l) {
   p.frame = 0;
   p.angle = 0;
   p.projectiles = [];
-  p.damage =  20;
+  // p.damage =  20;
   p.key = 0;
   enemies = [];
 
@@ -990,6 +1000,7 @@ function init(l) {
   // for (let i = 0; i < enemyPositions[l].length; i++) {
   //   enemies.push(new Enemy(enemyPositions[l][i][0], enemyPositions[l][i][1]));
   // }
+
 }
 
 window.addEventListener("load", () => {
